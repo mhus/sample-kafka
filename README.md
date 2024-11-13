@@ -26,5 +26,5 @@ mvn spring-boot:run
 ## Try it out
 
 ```shell
-curl http://localhost:8088/sample/aloha
+curl http://localhost:8088/sample/key/aloha
 ```

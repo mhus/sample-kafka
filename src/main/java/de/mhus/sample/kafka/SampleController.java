@@ -19,10 +19,11 @@ public class SampleController {
         LOGGER.info("Creating SampleController..");
     }
 
-    @GetMapping("/sample/{message}")
-    public String producerAvroMessage(@PathVariable String message) {
-        LOGGER.info("Generating sample message..");
-        var id = kafkaDemoService.sendMessage(message);
+    @GetMapping("/sample/{key}/{message}")
+    public String producerAvroMessage(@PathVariable String key, @PathVariable String message) {
+        LOGGER.info("Generating sample message for key {}.", key);
+        var id = kafkaDemoService.sendMessage(key, message);
         return "ok " + id;
     }
+
 }
