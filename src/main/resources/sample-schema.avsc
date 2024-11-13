@@ -1,0 +1,14 @@
+{
+    "type": "record",
+    "name": "SampleRecord",
+    "namespace": "de.mhus.sample.kafka.avro",
+    "fields": [
+    {
+        "name": "id",
+        "type": "int"
+    },
+    {
+        "name": "name",
+        "type": "string"
+    }]
+}

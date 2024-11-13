@@ -1,0 +1,16 @@
+
+server:
+  port: 8088
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-exception: true
+
+spring:
+  application:
+    name: sample-kafka
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    schema:
+      registry:
+        url: ${KAFKA_SCHEMA_REGISTRY:http://localhost:8081/apis/ccompat/v6}
