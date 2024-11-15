@@ -35,7 +35,7 @@ services:
       KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka -Dcom.sun.management.jmxremote.rmi.port=9997 -Dcom.sun.management.jmxremote.port=9997
 
   schema-registry:
-    container_name: schemaregistry
+    container_name: schema-registry
     image: apicurio/apicurio-registry-mem:2.4.2.Final
     ports:
       - 8081:8080
@@ -53,5 +53,5 @@ services:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9093
       KAFKA_CLUSTERS_0_METRICS_PORT: 9997
-      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry:8080
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schema-registry:8080/apis/ccompat/v6
       DYNAMIC_CONFIG_ENABLED: 'true'

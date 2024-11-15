@@ -1,4 +1,4 @@
-package de.mhus.sample.kafka;
+package de.mhus.sample.kafka.second;
 
 import de.mhus.sample.kafka.avro.SampleRecord;
 import lombok.extern.slf4j.Slf4j;
@@ -13,11 +13,15 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-@KafkaListener(topics = "sample-topic", groupId = "sample-group", containerFactory = "kafkaListenerContainerFactory")
-public class SampleTopicConsumer {
+@KafkaListener(
+        topics = SecondKafkaFactory.SAMPLE_TOPIC_ID,
+        groupId = SecondKafkaFactory.SAMPLE_GROUP_ID,
+        containerFactory = SecondKafkaFactory.LISTENER_CONTAINER_FACTORY
+)
+public class SecondSampleTopicConsumer {
 
     @Autowired
-    private KafkaSampleService kafkaSampleService;
+    private SecondKafkaSampleService kafkaSampleService;
 
     @KafkaHandler
     public void handleSampleRecord(

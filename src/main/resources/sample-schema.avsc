@@ -8,6 +8,10 @@
         "type": "int"
     },
     {
+        "name": "errorRate",
+        "type": "int"
+    },
+    {
         "name": "name",
         "type": "string"
     }]
