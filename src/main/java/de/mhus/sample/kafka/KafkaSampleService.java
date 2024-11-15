@@ -28,16 +28,12 @@ public class KafkaSampleService {
         return message.getId();
     }
 
-    @KafkaListener(topics = "sample-topic", groupId = "sample-group", containerFactory = "kafkaListenerContainerFactory")
-    public void listen(SampleRecord message,
-                       @Header(name = KafkaHeaders.RECEIVED_KEY, required = false) String key,
-                       Acknowledgment ack) {
-        LOGGER.info("Received key {} message: {}", key, message);
+    public void processMessage(String key, SampleRecord message) {
+        LOGGER.info("Process key {} message: {}", key, message);
         if (Math.random() < 0.1) {
             LOGGER.info("Simulating error...");
             throw new RuntimeException("Simulated error");
         }
-        ack.acknowledge();
     }
 
 }

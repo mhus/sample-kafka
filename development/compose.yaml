@@ -31,9 +31,11 @@ services:
       KAFKA_ADVERTISED_LISTENERS: 'PLAINTEXT://localhost:9092,PLAINTEXT_UI://kafka:9093'
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,PLAINTEXT_UI://0.0.0.0:9093
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_JMX_PORT: 9997
+      KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka -Dcom.sun.management.jmxremote.rmi.port=9997 -Dcom.sun.management.jmxremote.port=9997
 
   schema-registry:
-    container_name: schema_registry
+    container_name: schemaregistry
     image: apicurio/apicurio-registry-mem:2.4.2.Final
     ports:
       - 8081:8080
@@ -44,13 +46,12 @@ services:
 
   kafka-ui:
     container_name: kafka-ui
-    image: provectuslabs/kafka-ui:latest
+    image: provectuslabs/kafka-ui:v0.7.2
     ports:
       - 8082:8080
     environment:
-      DYNAMIC_CONFIG_ENABLED: true
-    links:
-      - kafka:kafka
-      - schema-registry:schema_registry
-    volumes:
-      - ./kui-config.yml:/etc/kafkaui/dynamic_config.yaml
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9093
+      KAFKA_CLUSTERS_0_METRICS_PORT: 9997
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://schemaregistry:8080
+      DYNAMIC_CONFIG_ENABLED: 'true'
