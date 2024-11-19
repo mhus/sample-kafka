@@ -52,7 +52,7 @@ public class FirstKafkaFactory {
         return new DefaultKafkaProducerFactory<>(props);
     }
 
-    private ConsumerFactory<String, String> consumerFactory() {
+    public Map<String, Object> createConsumerProperties() {
         Map<String, Object> props = new HashMap<>();
         props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapAddress);
         props.put(ConsumerConfig.GROUP_ID_CONFIG, SAMPLE_GROUP_ID);
@@ -61,8 +61,11 @@ public class FirstKafkaFactory {
         props.put(SCHEMA_REGISTRY_URL_CONFIG, schemaRegistryUrl);
         props.put(VALUE_SUBJECT_NAME_STRATEGY, RecordNameStrategy.class);
         props.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, "true");
+        return props;
+    }
 
-        return new DefaultKafkaConsumerFactory<>(props);
+    private ConsumerFactory<String, String> consumerFactory() {
+        return new DefaultKafkaConsumerFactory<>(createConsumerProperties());
     }
 
     @Bean

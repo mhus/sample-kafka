@@ -2,14 +2,18 @@ package de.mhus.sample.kafka.first;
 
 import de.mhus.sample.kafka.avro.SampleRecord;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.common.TopicPartition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaHandler;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.listener.AbstractConsumerSeekAware;
 import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.kafka.support.KafkaHeaders;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -31,6 +35,11 @@ public class FirstSampleTopicConsumer {
         LOGGER.info("Received key {} message: {}", key, message);
         kafkaSampleService.processMessage(key, message);
         ack.acknowledge();
+    }
+
+    @KafkaHandler(isDefault = true)
+    void handleUnknown(@Payload final Object unknown) {
+        LOGGER.error("Received unknown event: {}", unknown);
     }
 
 }
